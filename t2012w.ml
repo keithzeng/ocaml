@@ -12,28 +12,6 @@ let score = ref 0
 let max = ref 0
 let timeout = 300
 
-(* 
-exception TimeOutException
-let reset_alarm () = Sys.set_signal Sys.sigalrm (Sys.Signal_ignore)
-let set_alarm timeout =
-  ignore (Sys.signal
-            Sys.sigalrm
-            (Sys.Signal_handle (fun i -> reset_alarm (); raise TimeOutException)));
-  ignore (Unix.alarm timeout)
-
-let runWTimeout (f,arg,out,time) = 
-  let rv = ref (ErrorCode "timeout") in  
-  set_alarm timeout;
-  let rv = 
-    try if compare (f arg) out = 0 then Pass else Fail
-    with TimeOutException -> ErrorCode "timeout"
-    | e -> 
-      (print130 ("Uncaught Exception: "^(Printexc.to_string e));
-       ErrorCode "exception") in
-  reset_alarm ();
-  rv
-*)
-
 let runWTimeout (f,arg,out,time) = 
   try if compare (f arg) out = 0 then Pass else Fail
   with e -> (print130 ("Uncaught Exception: "^(Printexc.to_string e)); ErrorCode "exception") 
@@ -78,15 +56,23 @@ let runAllTests () =
     let _ = (score := 0; max := 0) in
     let report =
       [
-      runTest (split, [23;1;8;3],([23;1],[8;3]),1,"split 1");
-      runTest (split, [23;1;8;3;6],([23;1],[8;3;6]),1,"split 2");
-      runTest (split, [23;1;8;3;6;20],([23;1;8],[3;6;20]),1,"split 3");
-      runTest (split, ["a";"b";"c"],(["a"],["b";"c"]),1,"split 4");
-      runTest (split, ["a"],([],["a"]),1,"split 5");
-      runTest (merge [2;4;6;8],[1;3;5],[1;2;3;4;5;6;8],1,"merge 1");
-      runTest (merge [2;10;20],[1;2;3;4;5;8;10;12],[1;2;2;3;4;5;8;10;10;12;20],1,"merge 2");
-      runTest (merge_sort, [2;10;3;2;1],[1;2;2;3;10],1,"merge_sort 1");
-      runTest (merge_sort, [-10;0;10;-20;100;-100],[-100;-20;-10;0;10;100],1,"merge_sort 2");
+      runTest (split, [23;1;8;3],([23;1],[8;3]),3,"split 1");
+      runTest (split, [23;1;8;3;6],([23;1],[8;3;6]),3,"split 2");
+      runTest (split, [23;1;8;3;6;20],([23;1;8],[3;6;20]),3,"split 3");
+      runTest (split, ["a";"b";"c"],(["a"],["b";"c"]),3,"split 4");
+      runTest (split, ["a"],([],["a"]),3,"split 5");
+      runTest (merge [2;4;6;8],[1;3;5],[1;2;3;4;5;6;8],7,"merge 1");
+      runTest (merge [2;10;20],[1;2;3;4;5;8;10;12],[1;2;2;3;4;5;8;10;10;12;20],8,"merge 2");
+      runTest (merge_sort, [2;10;3;2;1],[1;2;2;3;10],7,"merge_sort 1");
+      runTest (merge_sort, [-10;0;10;-20;100;-100],[-100;-20;-10;0;10;100],8,"merge_sort 2");
+      runTest (replace, "a-b-c","a b c",15,"replace");
+      runTest (app [incr;decr], 10,[11;9],13,"app");
+      runTest (f11, 1,false,2,"app");
+      runTest (f12, 2,true,2,"app");
+      runTest (f13, 3,false,2,"app");
+      runTest (f21, 1,false,2,"app");
+      runTest (f22, 2,false,2,"app");
+      runTest (f23, 3,true,2,"app");
       ] in
     let s = Printf.sprintf "Results: Score/Max = %d / %d \n" !score !max in
     let _ = List.iter print130 (report@([s])) in
