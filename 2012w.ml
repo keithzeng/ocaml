@@ -1,7 +1,6 @@
-(*Problem 1*)
 #use "helper.ml"
 
-(*Problem 1:*)
+(*Problem 1*)
 let rec split l =
   let base = failwith "not implemented" in
   let fold_fn (i,l1,l2) elemt = failwith "not implemented" in

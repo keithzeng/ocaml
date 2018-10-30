@@ -13,4 +13,15 @@ let map = List.map
 
 
 let incr x = x+1
-let decr x = x - 1
+let decr x = x-1
+
+let even x = (x mod 2 = 0)
+
+type 'a maybe = 
+  | None
+  | Some of 'a
+
+
+let add a b c = a + b + c
+
+let f a b c = (a = b + c)
