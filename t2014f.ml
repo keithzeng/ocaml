@@ -1,4 +1,4 @@
-#use "2013f.ml"
+#use "2014f.ml"
 
 let key = "" (* change *)
 let prefix130 = "130" (* change *)
@@ -56,25 +56,26 @@ let runAllTests () =
     let _ = (score := 0; max := 0) in
     let report =
       [
-      runTest (count [1;2;3;4;5],10,0,3,"count 1");
-      runTest (count [1;2;3;4;5],3,1,3,"count 2");
-      runTest (count [1;3;2;3;4;3;5],3,3,4,"count 3");
-      runTest (make_palyndrome,[1;2],[2;1;1;2],3,"make_palyndrome 1");
-      runTest (make_palyndrome,[1;2;3],[3;2;1;1;2;3],3,"make_palyndrome 2");
-      runTest (make_palyndrome,[],[],4,"make_palyndrome 3");
-      runTest (fold_2 (fun d e i-> d*e*(i+1)) 1,[3;2],12,5,"fold_2");
-      runTest (fold_2 (fun d e i-> d*e*(i+1)) 1,[3;2;1],36,5,"fold_2");
-      runTest (ith ["a";"b";"c";"d"] 0,"","a",2,"ith 1");
-      runTest (ith ["a";"b";"c";"d"] 1,"","b",2,"ith 2");
-      runTest (ith ["a";"b";"c";"d"] 2,"","c",2,"ith 3");
-      runTest (ith ["a";"b";"c";"d"] 3,"","d",2,"ith 4");
-      runTest (ith ["a";"b";"c";"d"] 4,"","",2,"ith 5");
-      runTest (apply_all t, 0,5,10,"apply_all");
-      runTest (b1, 0,4,3,"apply_all t 0");
-      runTest (b2, 0,"a123bab",3,"apply_all t 123");
-      runTest (b3, 0,[24;16;8],4,"apply_all t [1;2;3]");
-      runTest (lf1, 3,lf2 3,5,"compose");
-      runTest (rf1, 3,rf2 3,5,"compose");
+      runTest (rename_var (Op("+",Var"a",Const 4)) "a", "b",(Op("+",Var"b",Const 4)),3,"rename_var 1");
+      runTest (rename_var (Op("+",Var"a",Const 4)) "b", "c",(Op("+",Var"a",Const 4)),3,"rename_var 2");
+      runTest (rename_var (Op("+",Op("*",Var"x",Var"y"),Op("-",Var"x",Var"z"))) "x", "y",Op("+",Op("*",Var"y",Var"y"),Op("-",Var"y",Var"z")),4,"rename_var 3");
+      runTest (to_str, (Op("+",Var"a",Const 4)),"a+4",3,"to_str 1");
+      runTest (to_str, (Op("+",Const 10,Op("+",Const 10,Var"b"))),"10+(10+b)",3,"to_str 2");
+      runTest (to_str, (Op("+",Op("*",Var"x",Var"y"),Op("-",Var"x",Var"z"))),"(x*y)+(x-z)",4,"to_str 3");
+      runTest (average_if even,[1;2;3;4;5],3,6,"average_if 1");
+      runTest (average_if even,[1;2;3;4;5;6;7;8],5,6,"average_if 2");
+      runTest (average_if even,[1;3;5;7],0,8,"average_if 3");
+      runTest (length_2,[[1;2;3];[4;6]],5,1,"length_2 1");
+      runTest (length_2,[[1;2;3];[4;6];[9;10]],7,2,"length_2 2");
+      runTest (length_2,[[];[];[]],0,2,"length_2 3");
+      runTest (length_3,[[[1;2;3]];[[4;6];[7;8]]],7,2,"length_3 1");
+      runTest (length_3,[[[1;2;3]];[[4;6];[7;8];[10;11]]],9,3,"length_3 2");
+      runTest (ans1,0,f1 [1;2;3;4],1,"ans1");
+      runTest (ans2,0,f2 [3;5;7;9],1,"ans2");
+      runTest (ans3,0,f3 [1;3;6],1,"ans3");
+      runTest (ans4,0,0,2,"ans4");
+      runTest (ans5,0,"yyyzzzabc",2,"ans5");
+      runTest (ans6,0,[24;18;12],3,"ans6");
       ] in
     let s = Printf.sprintf "Results: Score/Max = %d / %d \n" !score !max in
     let _ = List.iter print130 (report@([s])) in

@@ -10,9 +10,7 @@ let explode s =
 let implode cs = 
   String.concat "" (List.map (String.make 1) cs)
 
-
 let map = List.map
-
 
 let incr x = x+1
 let decr x = x-1
@@ -23,10 +21,7 @@ type 'a maybe =
   | None
   | Some of 'a
 
-
 let add a b c = a + b + c
-
-let f a b c = (a = b + c)
 
 type 'a fun_tree =
   | Leaf of ('a -> 'a)
@@ -34,3 +29,8 @@ type 'a fun_tree =
 
 let fl1 = List.fold_left (fun x y -> (y*2)::x) []
 let fl2 = List.fold_left (fun x y -> x@[y]) []
+
+type expr =
+  | Const of int
+  | Var of string
+  | Op of string * expr * expr

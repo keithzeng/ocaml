@@ -36,8 +36,12 @@ let rec compose t1 t2 =
   match (t1, t2) with
   | _ -> failwith "not implemented"
 
-
+(*Remove below after implement compose*)
+let lf1 x = x
+let rf1 x = x
+(*Uncomment below after implement compose
 let t3 = compose t1 t2
-let t4 = Node(Leaf(fun x -> f1(f3 x)),Leaf(fun x -> f2(f4 x)))
 let Node(Leaf lf1, Leaf rf1) = t3
-let Node(Leaf lf2, Leaf rf2) = t4
+*)
+let lf2 x = f1(f3 x)
+let rf2 x = f2(f4 x)
