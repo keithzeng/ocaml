@@ -1,5 +1,7 @@
 let length = List.length
 
+let fold_left = List.fold_left
+
 let explode s = 
   let rec _exp i = 
     if i >= String.length s then [] else (s.[i])::(_exp (i+1)) in
