@@ -27,3 +27,10 @@ type 'a maybe =
 let add a b c = a + b + c
 
 let f a b c = (a = b + c)
+
+type 'a fun_tree =
+  | Leaf of ('a -> 'a)
+  | Node of ('a fun_tree) * ('a fun_tree)
+
+let fl1 = List.fold_left (fun x y -> (y*2)::x) []
+let fl2 = List.fold_left (fun x y -> x@[y]) []
