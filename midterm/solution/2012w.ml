@@ -2,11 +2,11 @@
 #use "helper.ml"
 
 let rec split l =
-  let base = (0,[],[]) in
-  let fold_fn (i,l1,l2) elemt = (
-    if i < (length l)/2 then (i+1, l1@[elemt], l2)
-    else (i+1,l1,l2@[elemt])) in
-  let (_,l1,l2) = List.fold_left fold_fn base l in
+  let b = (0,[],[]) in
+  let fold_fn (i,l1,l2) e = (
+    if i < (length l)/2 then (i+1, l1@[e], l2)
+    else (i+1,l1,l2@[e])) in
+  let (_,l1,l2) = List.fold_left fold_fn b l in
   (l1,l2)
 
 

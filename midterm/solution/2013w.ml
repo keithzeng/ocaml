@@ -26,10 +26,10 @@ let rec zip l1 l2 =
   | _, [] -> []
   | h1::t1, h2::t2 -> (h1,h2)::(zip t1 t2)
 
-let map2 f l1 l2 = map (fun x -> let a, b = x in (f a b)) (zip l1 l2)
+let map2 f l1 l2 = map (fun (a,b) -> f a b) (zip l1 l2)
 
 
-let map3 f l1 l2 l3 = map (fun x -> let a,(b,c) = x in (f a b c)) (zip l1 (zip l2 l3))
+let map3 f l1 l2 l3 = map (fun (a,(b,c)) -> f a b c) (zip l1 (zip l2 l3))
 
 
 (*Problem 3*)
